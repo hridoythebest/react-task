@@ -18,6 +18,7 @@ const Modal1 = ({modal1IsOpen,closeModal1}) => {
   const [count, setCount] = useState(null);
   const [nextPage, setNextPage] = useState(null);
   const [previousPage, setPreviousPage] = useState(null);
+  const [showEvenIds, setShowEvenIds] = useState(false);
 
   const getContacts = (url) => {
       fetch(url)
@@ -55,6 +56,12 @@ const Modal1 = ({modal1IsOpen,closeModal1}) => {
     function closeModal2() {
         setModel2IsOpen(false);
     }
+
+    const handleCheckboxChange = () => {
+      setShowEvenIds(!showEvenIds);
+    };
+
+
     return (
         <div >
         <Modal
@@ -75,19 +82,32 @@ const Modal1 = ({modal1IsOpen,closeModal1}) => {
             <h2>All Contact Information</h2>
             <p>Count: {count}</p>
             <p><button onClick={handlePreviousPage} disabled={!previousPage}>Previous Page</button> <button onClick={handleNextPage} disabled={!nextPage}>Next Page</button> </p>
+
+            <label>
+              Show Even IDs - 
+              <input
+                type='checkbox'
+                checked={showEvenIds}
+                onChange={handleCheckboxChange}
+              />
+            </label>
           
 
-            {contacts.map((contact) => (
-                <div key={contact.id} >
-                    <p>Id : {contact.id}</p>
-                    <p>Name : {contact.country.name}</p>
-                    <p>Country_id : {contact.country.id}</p>
-                    <p>Phone : {contact.phone}</p>
-                    <br />
-                </div>
-            ))}
+           {contacts.map((contact) => {
+            if (showEvenIds && contact.id % 2 !== 0) {
+              return null;
+            }
+            return (
+              <div key={contact.id}>
+                <p>Id : {contact.id}</p>
+                <p>Name : {contact.country.name} <a href="/">Show Details</a> </p>
+                <p>Country_id : {contact.country.id} </p>
+                <p>Phone : {contact.phone}</p>
+                <br />
+              </div>
+            );
+          })}
         </div>
-    );
       </Modal>
       <Modal2 modal2IsOpen={modal2IsOpen}  closeModal2={closeModal2}></Modal2>
         </div>
