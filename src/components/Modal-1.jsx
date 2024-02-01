@@ -100,8 +100,7 @@ const Modal1 = ({modal1IsOpen,closeModal1}) => {
             return (
               <div key={contact.id}>
                 <p>Id : {contact.id}</p>
-                <p>Name : {contact.country.name} <a href="/">Show Details</a> </p>
-                <p>Country_id : {contact.country.id} </p>
+                <p>Name : {contact.country.name} <a href="#">Show Details</a> </p>
                 <p>Phone : {contact.phone}</p>
                 <br />
               </div>
